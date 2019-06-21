@@ -62,6 +62,7 @@ def destroy(request, num):
 
 def edit_trip(request, num):
     context = {
+        "user": User.objects.get(id=request.session['user_id']),
         "trip": Trip.objects.get(id=num),
         "trip_start": datetime.strftime(Trip.objects.get(id=num).start_date, "%Y-%m-%d"),
         "trip_end": datetime.strftime(Trip.objects.get(id=num).end_date, "%Y-%m-%d"),
@@ -86,6 +87,7 @@ def update(request, num):
 def view_trip(request, num):
     trip = Trip.objects.get(id=num)
     context = {
+        "user": User.objects.get(id=request.session['user_id']),
         "trip": trip,
         "joiners": User.objects.filter(trips_joined=trip).exclude(id=trip.creator.id),
     }
